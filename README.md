@@ -69,17 +69,12 @@ print(f"Answer Faithfulness:    {score:.2f}")  # 1.00
 ### 1. Retrieval Quality: Precision@k
 Measures whether the retriever fetched ground-truth chunks in its top-$k$ results:
 
-\[
-\operatorname{Precision@k}
-=
+$$
+\text{Precision@k} =
 \frac{
-\left|
-\operatorname{set}\left(\operatorname{retrieved}[:k]\right)
-\cap
-\operatorname{set}\left(\operatorname{golden\_documents}\right)
-\right|
+\left|\text{set}(\text{retrieved}[:k]) \cap \text{set}(\text{golden\_documents})\right|
 }{k}
-\]
+$$
 
 - Uses strict **set semantics**: duplicated golden documents never artificially inflate the score.
 - If no retrieval data is supplied, this metric is omitted (`None`).
