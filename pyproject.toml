@@ -1,5 +1,5 @@
 [project]
-name = "rag-eval"
+name = "rag-eval-py"
 version = "0.1.0"
 description = "Score any RAG pipeline: retrieval precision + answer faithfulness"
 readme = "README.md"

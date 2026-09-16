@@ -3,8 +3,8 @@
 > **Score any RAG pipeline on retrieval precision and answer faithfulness — zero framework lock-in, zero required API keys.**
 
 [![CI](https://github.com/mustafaabadshah/rag-eval/actions/workflows/ci.yml/badge.svg)](https://github.com/mustafaabadshah/rag-eval/actions/workflows/ci.yml)
-[![PyPI version](https://img.shields.io/pypi/v/rag-eval.svg)](https://pypi.org/project/rag-eval/)
-[![Python versions](https://img.shields.io/pypi/pyversions/rag-eval.svg)](https://pypi.org/project/rag-eval/)
+[![PyPI version](https://img.shields.io/pypi/v/rag-eval-py.svg)](https://pypi.org/project/rag-eval-py/)
+[![Python versions](https://img.shields.io/pypi/pyversions/rag-eval-py.svg)](https://pypi.org/project/rag-eval-py/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
@@ -21,19 +21,19 @@
 
 Install the core library and CLI:
 ```bash
-pip install rag-eval
+pip install rag-eval-py
 ```
 
 Optional extras:
 ```bash
 # FastAPI server + uvicorn
-pip install "rag-eval[api]"
+pip install "rag-eval-py[api]"
 
 # OpenAI LLM-as-a-judge backend
-pip install "rag-eval[judge]"
+pip install "rag-eval-py[judge]"
 
 # All extras
-pip install "rag-eval[api,judge]"
+pip install "rag-eval-py[api,judge]"
 ```
 
 ---
