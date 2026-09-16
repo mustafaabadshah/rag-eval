@@ -11,22 +11,9 @@
 
 ## Demo
 
-```shell
-$ rag-eval eval examples/data.jsonl
-```
-
-```
-                          RAG-EVAL Evaluation Summary                          
-╭────────────────────────────┬───────────────┬────────────────────────────────╮
-│ Metric                     │ Score / Value │ Method & Details               │
-├────────────────────────────┼───────────────┼────────────────────────────────┤
-│ Evaluated Samples          │             3 │ Total processed samples        │
-│ Mean Retrieval Precision@k │        1.0000 │ Precision at rank cutoff k     │
-│                            │               │ with set semantics             │
-│ Mean Faithfulness          │        1.0000 │ Answer verification via        │
-│                            │               │ claim_overlap                  │
-╰────────────────────────────┴───────────────┴────────────────────────────────╯
-```
+<p align="center">
+  <img src="assets/demo.svg" alt="rag-eval CLI Demo" width="820" />
+</p>
 
 ---
 

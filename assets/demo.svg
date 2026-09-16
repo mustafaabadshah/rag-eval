@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420" width="820" height="420">
+  <defs>
+    <style>
+      @keyframes typing {
+        0%, 15% { width: 0; }
+        35%, 85% { width: 34ch; }
+        90%, 100% { width: 0; }
+      }
+      @keyframes cursor {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0; }
+      }
+      @keyframes showOutput {
+        0%, 36% { opacity: 0; transform: translateY(4px); }
+        42%, 85% { opacity: 1; transform: translateY(0); }
+        90%, 100% { opacity: 0; transform: translateY(4px); }
+      }
+      .window { fill: #0f141c; rx: 12px; stroke: #1e293b; stroke-width: 1px; }
+      .header { fill: #171f2c; rx: 12px; }
+      .dot-red { fill: #ef4444; }
+      .dot-yellow { fill: #f59e0b; }
+      .dot-green { fill: #10b981; }
+      .title { fill: #94a3b8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 500; text-anchor: middle; }
+      .text { font-family: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, monospace; font-size: 13.5px; fill: #f8fafc; }
+      .prompt { fill: #38bdf8; font-weight: bold; }
+      .cmd-container { display: inline-block; overflow: hidden; white-space: nowrap; animation: typing 8s steps(34, end) infinite; }
+      .cursor { display: inline-block; width: 8px; height: 16px; background: #38bdf8; animation: cursor 1s infinite; vertical-align: middle; }
+      .output { animation: showOutput 8s ease-in-out infinite; }
+      .tbl-title { fill: #38bdf8; font-weight: bold; }
+      .tbl-border { fill: #64748b; }
+      .tbl-header { fill: #c084fc; font-weight: bold; }
+      .tbl-metric { fill: #f1f5f9; font-weight: 600; }
+      .tbl-val { fill: #34d399; font-weight: bold; }
+      .tbl-desc { fill: #94a3b8; }
+    </style>
+  </defs>
+
+  <!-- Window Frame -->
+  <rect width="820" height="420" class="window" />
+  
+  <!-- Header Bar -->
+  <path d="M0,0 H820 V40 H0 Z" class="header" rx="12" />
+  <circle cx="24" cy="20" r="6" class="dot-red" />
+  <circle cx="44" cy="20" r="6" class="dot-yellow" />
+  <circle cx="64" cy="20" r="6" class="dot-green" />
+  <text x="410" y="25" class="title">rag-eval — terminal</text>
+
+  <!-- Terminal Content -->
+  <g transform="translate(30, 80)">
+    <!-- Command Line -->
+    <text x="0" y="0" class="text">
+      <tspan class="prompt">user@dev:~$ </tspan>
+    </text>
+
+    <!-- Typing animation container via foreignObject -->
+    <foreignObject x="110" y="-15" width="600" height="30">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace; font-size: 13.5px; color: #f8fafc;">
+        <span class="cmd-container">rag-eval eval examples/data.jsonl</span>
+        <span class="cursor"></span>
+      </div>
+    </foreignObject>
+
+    <!-- Evaluator Table Output -->
+    <g class="output" transform="translate(10, 35)">
+      <!-- Title -->
+      <text x="235" y="0" class="text tbl-title">RAG-EVAL Evaluation Summary</text>
+      
+      <!-- Table Borders & Content -->
+      <text x="0" y="24" class="text tbl-border">╭────────────────────────────┬───────────────┬────────────────────────────────╮</text>
+      <text x="0" y="44" class="text">
+        <tspan class="tbl-border">│ </tspan><tspan class="tbl-header">Metric                     </tspan>
+        <tspan class="tbl-border">│ </tspan><tspan class="tbl-header">Score / Value </tspan>
+        <tspan class="tbl-border">│ </tspan><tspan class="tbl-header">Method &amp; Details               </tspan>
+        <tspan class="tbl-border">│</tspan>
+      </text>
+      <text x="0" y="64" class="text tbl-border">├────────────────────────────┼───────────────┼────────────────────────────────┤</text>
+      <text x="0" y="84" class="text">
+        <tspan class="tbl-border">│ </tspan><tspan class="tbl-metric">Evaluated Samples          </tspan>
+        <tspan class="tbl-border">│             </tspan><tspan class="tbl-val">3 </tspan>
+        <tspan class="tbl-border">│ </tspan><tspan class="tbl-desc">Total processed samples        </tspan>
+        <tspan class="tbl-border">│</tspan>
+      </text>
+      <text x="0" y="104" class="text">
+        <tspan class="tbl-border">│ </tspan><tspan class="tbl-metric">Mean Retrieval Precision@k </tspan>
+        <tspan class="tbl-border">│        </tspan><tspan class="tbl-val">1.0000 </tspan>
+        <tspan class="tbl-border">│ </tspan><tspan class="tbl-desc">Precision at rank cutoff k     </tspan>
+        <tspan class="tbl-border">│</tspan>
+      </text>
+      <text x="0" y="124" class="text">
+        <tspan class="tbl-border">│                            │               │ </tspan>
+        <tspan class="tbl-desc">with set semantics             </tspan>
+        <tspan class="tbl-border">│</tspan>
+      </text>
+      <text x="0" y="144" class="text">
+        <tspan class="tbl-border">│ </tspan><tspan class="tbl-metric">Mean Faithfulness          </tspan>
+        <tspan class="tbl-border">│        </tspan><tspan class="tbl-val">1.0000 </tspan>
+        <tspan class="tbl-border">│ </tspan><tspan class="tbl-desc">Answer verification via        </tspan>
+        <tspan class="tbl-border">│</tspan>
+      </text>
+      <text x="0" y="164" class="text">
+        <tspan class="tbl-border">│                            │               │ </tspan>
+        <tspan class="tbl-desc">claim_overlap                  </tspan>
+        <tspan class="tbl-border">│</tspan>
+      </text>
+      <text x="0" y="184" class="text tbl-border">╰────────────────────────────┴───────────────┴────────────────────────────────╯</text>
+    </g>
+  </g>
+</svg>
