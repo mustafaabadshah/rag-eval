@@ -2,7 +2,7 @@
 
 > **Score any RAG pipeline on retrieval precision and answer faithfulness — zero framework lock-in, zero required API keys.**
 
-[![CI](https://github.com/Mustaaabadshah/rag-eval/actions/workflows/ci.yml/badge.svg)](https://github.com/Mustaaabadshah/rag-eval/actions/workflows/ci.yml)
+[![CI](https://github.com/mustafaabadshah/rag-eval/actions/workflows/ci.yml/badge.svg)](https://github.com/mustafaabadshah/rag-eval/actions/workflows/ci.yml)
 [![PyPI version](https://img.shields.io/pypi/v/rag-eval.svg)](https://pypi.org/project/rag-eval/)
 [![Python versions](https://img.shields.io/pypi/pyversions/rag-eval.svg)](https://pypi.org/project/rag-eval/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
