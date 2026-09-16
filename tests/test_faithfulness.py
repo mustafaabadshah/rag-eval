@@ -70,3 +70,37 @@ def test_faithfulness_case_and_punctuation_insensitivity() -> None:
 
 def test_support_threshold_constant() -> None:
     assert SUPPORT_THRESHOLD == 0.8
+
+
+class FakeJudge:
+    def __init__(self, supported_claims: set[str]) -> None:
+        self.supported_claims = supported_claims
+
+    def verify(self, claim: str, context: list[str]) -> bool:
+        return claim in self.supported_claims
+
+
+def test_faithfulness_with_judge() -> None:
+    from rag_eval.judge import faithfulness_with_judge
+
+    context = ["Alpha Centauri is a star system."]
+    answer = "Alpha Centauri is a star system. It has 10 planets."
+    fake_judge = FakeJudge(supported_claims={"Alpha Centauri is a star system"})
+
+    score, supported, unsupported = faithfulness_with_judge(answer, context, fake_judge)
+    assert score == 0.5
+    assert supported == ["Alpha Centauri is a star system"]
+    assert unsupported == ["It has 10 planets"]
+
+
+def test_openai_judge_missing_extra_raises_runtime_error() -> None:
+    import importlib.util
+
+    from rag_eval.judge import OpenAIJudge
+
+    # If openai is not installed in the default test environment, it should raise RuntimeError
+    if importlib.util.find_spec("openai") is None:
+        with pytest.raises(RuntimeError) as exc_info:
+            OpenAIJudge()
+        assert "pip install rag-eval[judge]" in str(exc_info.value)
+

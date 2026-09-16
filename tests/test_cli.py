@@ -60,3 +60,15 @@ def test_cli_eval_claims_only(tmp_path: Path) -> None:
     assert result.exit_code == 0
     parsed = json.loads(result.stdout)
     assert parsed["mean_retrieval_precision_at_k"] is None
+
+
+def test_cli_eval_unsupported_judge(tmp_path: Path) -> None:
+    valid_file = tmp_path / "valid.jsonl"
+    valid_file.write_text(
+        '{"question": "Q1", "answer": "Paris is capital.", "context": ["Paris is capital of France."]}\n',
+        encoding="utf-8",
+    )
+    result = runner.invoke(app, ["eval", str(valid_file), "--judge", "anthropic"])
+    assert result.exit_code == 1
+    assert "unsupported judge" in result.output.lower()
+

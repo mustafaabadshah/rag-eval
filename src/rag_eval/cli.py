@@ -7,6 +7,7 @@ import typer
 from rich.console import Console
 
 from rag_eval.faithfulness import faithfulness
+from rag_eval.judge import Judge, OpenAIJudge, faithfulness_with_judge
 from rag_eval.loader import LoaderError, load
 from rag_eval.models import SampleScore
 from rag_eval.report import build_report, render_json, render_table
@@ -34,11 +35,30 @@ def evaluate(
     claims_only: Annotated[
         bool, typer.Option("--claims-only", help="Skip retrieval metrics and evaluate answer faithfulness only")
     ] = False,
+    judge: Annotated[
+        str | None, typer.Option("--judge", help="Optional LLM judge backend ('openai')")
+    ] = None,
 ) -> None:
     """Evaluate a JSONL dataset on retrieval precision and answer faithfulness."""
     if not data.exists():
         err_console.print(f"[bold red]Error:[/bold red] File not found: {data}")
         raise typer.Exit(code=1)
+
+    judge_instance: Judge | None = None
+    method_name = "claim_overlap"
+    if judge is not None:
+        if judge.lower() == "openai":
+            try:
+                judge_instance = OpenAIJudge()
+                method_name = "llm_judge"
+            except Exception as err:
+                err_console.print(f"[bold red]Error initializing judge:[/bold red] {err}")
+                raise typer.Exit(code=1) from err
+        else:
+            err_console.print(
+                f"[bold red]Error:[/bold red] Unsupported judge '{judge}'. Supported options: 'openai'"
+            )
+            raise typer.Exit(code=1)
 
     try:
         samples = load(data, skip_errors=skip_errors)
@@ -52,7 +72,12 @@ def evaluate(
         if not claims_only and sample.retrieved is not None and sample.golden_documents is not None:
             retrieval_score = precision_at_k(sample.retrieved, sample.golden_documents, k=k)
 
-        faith_score, supported, unsupported = faithfulness(sample.answer, sample.context)
+        if judge_instance is not None:
+            faith_score, supported, unsupported = faithfulness_with_judge(
+                sample.answer, sample.context, judge_instance
+            )
+        else:
+            faith_score, supported, unsupported = faithfulness(sample.answer, sample.context)
 
         all_claims = supported + unsupported
         scores.append(
@@ -60,7 +85,7 @@ def evaluate(
                 sample_id=sample.id,
                 retrieval_precision_at_k=retrieval_score,
                 faithfulness=faith_score,
-                faithfulness_method="claim_overlap",
+                faithfulness_method=method_name,
                 claims=all_claims,
                 unsupported_claims=unsupported,
             )
